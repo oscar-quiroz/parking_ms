@@ -9,7 +9,7 @@ public class Vehiculo {
     private String tipo_vehiculo;
     private String propietario;
     private Double valorHora;
-    private boolean estaDentro;
+    private boolean estaDentro ;
 
     public Vehiculo(String placa, String tipo_vehiculo, String propietario, Double valorHora, boolean estaDentro) {
         this.placa = placa;

@@ -65,9 +65,7 @@ public class TransactionController {
            System.out.println("diferencia: "+diferencia);
            System.out.println("total segundos: "+ segundos);
            System.out.println("minutos: "+minutos);
-
            System.out.println("total horas: "+Math.ceil(horas));
-
            System.out.println("valor total: " + valorTotal);
             return valorTotal;
     }
