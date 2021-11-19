@@ -7,6 +7,7 @@ import com.misiontic.parking_ms.repositories.VehiculoRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class TransactionController {
@@ -17,12 +18,22 @@ public class TransactionController {
         this.transactionRepository = transactionRepository;
     }
 
+    /**
+     * Crear una nueva transaccion
+     * @param transaction
+     * @return
+     */
     @PostMapping("/Transaction")
     Transaction newTransaction (@RequestBody Transaction transaction){
         //transaction.setFecha_salida();
         return transactionRepository.save(transaction);
     }
 
+    /**
+     * Actualizaar una transaccion especifica por id
+     * @param id
+     * @return
+     */
     @PutMapping ("/Transaction/{id}")
     Transaction updateTransaction(@PathVariable String id){
         Transaction transaction = transactionRepository.findById(id)
@@ -35,18 +46,31 @@ public class TransactionController {
 
     }
 
+    /**
+     * Obtener una transaccion especifica por id
+     * @param id
+     * @return
+     */
     @GetMapping("/Transaction/{id}")
     Transaction getTransaction(@PathVariable String id){
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException("No se encontro la transacción"));
     }
 
-    @GetMapping("/dimelo")
-    String imprimir(){
-        String resultado = "Funcionan los getters";
-        return resultado;
+    /**
+     * Obtiene todas las transacciones almacenadas en bases de datos
+     * @return
+     */
+    @GetMapping("/Transactions")
+    List<Transaction> getTransactions(){
+        return transactionRepository.findAll();
     }
 
+
+    /**
+     * Obtiene la fecha actual
+     * @return
+     */
     @GetMapping("/date")
     Date imprimirFecha(){
         Date resultado = new Date();
@@ -54,7 +78,12 @@ public class TransactionController {
     }
 
 
-
+    /**
+     * calcular el total del valor de la transacción
+     * @param entrada
+     * @param salida
+     * @return
+     */
        Double calcularTotal(Date entrada, Date salida){
             double valorHora = 2000;
            double diferencia =salida.getTime() - entrada.getTime() ; // tiempo de diferencia en milisegundos
