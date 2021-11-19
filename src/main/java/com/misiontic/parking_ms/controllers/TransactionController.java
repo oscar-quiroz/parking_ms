@@ -57,10 +57,18 @@ public class TransactionController {
 
        Double calcularTotal(Date entrada, Date salida){
             double valorHora = 2000;
-            Long diferencia =salida.getTime() - entrada.getTime() ; // tiempo de diferencia en milisegundos
-            Long segundos = diferencia / 1000;
-            Long horas = segundos / 3600;
-            Double valorTotal = horas * valorHora;
+           double diferencia =salida.getTime() - entrada.getTime() ; // tiempo de diferencia en milisegundos
+           double segundos = diferencia / 1000;
+           double minutos = segundos/60;
+           double horas = segundos / 3600;
+           double valorTotal = Math.ceil(horas) * valorHora;
+           System.out.println("diferencia: "+diferencia);
+           System.out.println("total segundos: "+ segundos);
+           System.out.println("minutos: "+minutos);
+
+           System.out.println("total horas: "+Math.ceil(horas));
+
+           System.out.println("valor total: " + valorTotal);
             return valorTotal;
     }
 
