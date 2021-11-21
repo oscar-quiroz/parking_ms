@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TransactionController {
 
     private final TransactionRepository transactionRepository;
@@ -40,8 +41,8 @@ public class TransactionController {
                 .orElseThrow(() -> new TransactionNotFoundException("No se encontro la transacción"));
 
         transaction.setFecha_salida(new Date());
-        Date fechaSalida =  transaction.getFecha_salida();
-        transaction.setValorTotal( this.calcularTotal(transaction.getFecha_entrada(),transaction.getFecha_salida()) );
+        transaction.getVehiculo().setEstaDentro(false);
+        transaction.setValorTotal( this.calcularTotal(transaction.getFecha_entrada(),transaction.getFecha_salida(), transaction.getVehiculo().getValorHora() ));
         return transactionRepository.save(transaction);
 
     }
@@ -84,8 +85,8 @@ public class TransactionController {
      * @param salida
      * @return
      */
-       Double calcularTotal(Date entrada, Date salida){
-            double valorHora = 2000;
+       Double calcularTotal(Date entrada, Date salida, Double valorHora){
+
            double diferencia =salida.getTime() - entrada.getTime() ; // tiempo de diferencia en milisegundos
            double segundos = diferencia / 1000;
            double minutos = segundos/60;
